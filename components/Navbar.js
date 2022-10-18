@@ -1,14 +1,10 @@
 import React, {memo} from 'react';
-import {
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 import Colors from '../themes/Colors';
+
+import Logo from '../assets/images/logo.svg';
 
 const propTypes = {
   main: PropTypes.bool,
@@ -23,11 +19,7 @@ const Navbar = ({navigation, main}) => {
     <SafeAreaView>
       {main ? (
         <View style={styles.mainNav}>
-          <Image
-            resizeMode={'contain'}
-            source={require('../assets/images/movies.png')}
-            style={styles.logo}
-          />
+          <Logo width={50} height={50} />
           <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <Icon name={'search-outline'} size={30} color={Colors.white} />
           </TouchableOpacity>
@@ -47,10 +39,6 @@ Navbar.propTypes = propTypes;
 Navbar.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({
-  logo: {
-    height: 50,
-    width: 50,
-  },
   mainNav: {
     flex: 1,
     flexDirection: 'row',

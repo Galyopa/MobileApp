@@ -138,6 +138,7 @@ const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
   carousel: {
+    fontFamily: 'OpenSans-Regular',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

@@ -15,6 +15,7 @@ import {getMovieDetails} from '../services/services';
 import PlayButton from '../components/PlayButton';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Video from '../components/Video';
+import MaskedView from '@react-native-masked-view/masked-view';
 
 const placeholderImage = require('../assets/images/placeholder.png');
 const height = Dimensions.get('screen').height;
@@ -61,7 +62,29 @@ export const Detail = ({route}) => {
               <View style={styles.playButton}>
                 <PlayButton handlePress={videoShown} />
               </View>
-              <Text style={styles.movieTitle}>{movie.title}</Text>
+
+              <MaskedView
+                style={styles.titleContainer}
+                maskElement={
+                  <View style={styles.titleView}>
+                    <Text style={styles.titleText}>{movie.title}</Text>
+                  </View>
+                }>
+                {/* Shows behind the mask, you can put anything here, such as an image */}
+                <View
+                  style={{flex: 1, height: '100%', backgroundColor: '#324376'}}
+                />
+                <View
+                  style={{flex: 1, height: '100%', backgroundColor: '#F5DD90'}}
+                />
+                <View
+                  style={{flex: 1, height: '100%', backgroundColor: '#F76C5E'}}
+                />
+                <View
+                  style={{flex: 1, height: '100%', backgroundColor: '#e1e1e1'}}
+                />
+              </MaskedView>
+
               {movie.genres && (
                 <View style={styles.genresContainer}>
                   {movie.genres.map(genre => (
@@ -86,6 +109,7 @@ export const Detail = ({route}) => {
               </Text>
             </View>
           </ScrollView>
+
           <Modal
             animationType="slide"
             visible={modalVisible}
@@ -112,6 +136,24 @@ const styles = StyleSheet.create({
   image: {
     height: height / 2,
   },
+  titleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 100,
+    width: 300,
+  },
+  titleView: {
+    backgroundColor: 'transparent',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 24,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   movieTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -131,12 +173,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   overview: {
+    fontFamily: 'OpenSans-Regular',
     padding: 15,
   },
   release: {
     fontWeight: 'bold',
   },
   playButton: {
+    zIndex: 10,
     position: 'absolute',
     top: -25,
     right: 20,
