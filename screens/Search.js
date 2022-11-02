@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -12,11 +12,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {searchMovieTV} from '../services/services';
 import {MovieCard} from '../components/MovieCard';
 import {Error} from '../components/Error';
+import {showMessage} from 'react-native-flash-message';
 
 const Search = ({navigation}) => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState();
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (searchResults && searchResults.length === 0) {
+      showMessage({
+        message: 'No results matching your criteria',
+        description: 'Try different keywords',
+        type: 'warning',
+      });
+    }
+  }, [searchResults]);
 
   const onSubmit = () => {
     Promise.all([searchMovieTV(query), searchMovieTV(query, 'tv')])
@@ -53,12 +64,12 @@ const Search = ({navigation}) => {
             />
           )}
 
-          {searchResults && searchResults.length === 0 && (
+          {/* {searchResults && searchResults.length === 0 && (
             <View>
               <Text>No results matching your criteria</Text>
               <Text>Try different keywords</Text>
             </View>
-          )}
+          )} */}
 
           {!searchResults && (
             <View>
